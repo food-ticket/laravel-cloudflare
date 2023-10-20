@@ -8,6 +8,12 @@ Since the Cloudflare Images API is not yet supported by the official SDK, we inc
 - PHP >= 8.0
 - Laravel >= 9.0
 
+## Installation
+To start using the package, you need to install it via Composer:
+```
+composer require foodticket/laravel-cloudflare
+```
+
 ## Configuration
 Add the following environment variables to your .env file:
 ```
