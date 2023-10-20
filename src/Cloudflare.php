@@ -44,7 +44,7 @@ class Cloudflare
         return new DNS($this->adapter);
     }
 
-    public function firewall(): FirewallSettings
+    public function firewallSettings(): FirewallSettings
     {
         return new FirewallSettings($this->adapter);
     }
@@ -54,9 +54,14 @@ class Cloudflare
         return new Images($this->adapter);
     }
 
-    public function ip(): IPs
+    public function ips(): IPs
     {
         return new IPs($this->adapter);
+    }
+
+    public function accessRules(): AccessRules
+    {
+        return new AccessRules($this->adapter);
     }
 
     public function loadBalance(): LoadBalancers
@@ -79,11 +84,6 @@ class Cloudflare
         return new Railgun($this->adapter);
     }
 
-    public function rule(): AccessRules
-    {
-        return new AccessRules($this->adapter);
-    }
-
     public function ssl(): SSL
     {
         return new SSL($this->adapter);
@@ -94,14 +94,14 @@ class Cloudflare
         return new TLS($this->adapter);
     }
 
+    public function uARules(): UARules
+    {
+        return new UARules($this->adapter);
+    }
+
     public function user(): User
     {
         return new User($this->adapter);
-    }
-
-    public function userAgent(): UARules
-    {
-        return new UARules($this->adapter);
     }
 
     public function waf(): WAF
@@ -109,17 +109,17 @@ class Cloudflare
         return new WAF($this->adapter);
     }
 
-    public function zone(): Zones
-    {
-        return new Zones($this->adapter);
-    }
-
     public function zoneLockdown(): ZoneLockdown
     {
         return new ZoneLockdown($this->adapter);
     }
 
-    public function zoneSetting(): ZoneSettings
+    public function zones(): Zones
+    {
+        return new Zones($this->adapter);
+    }
+
+    public function zoneSettings(): ZoneSettings
     {
         return new ZoneSettings($this->adapter);
     }

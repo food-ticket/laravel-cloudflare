@@ -71,13 +71,13 @@ class Images implements API
         return $this->body->getContents();
     }
 
-    public function getImageDetails(string $accountID, string $path): string
+    public function getImageDetails(string $accountID, string $path): object
     {
         $response = $this->adapter->get("accounts/{$accountID}/images/v1/{$path}");
 
         $this->body = $response->getBody();
 
-        return $this->body->getContents();
+        return json_decode($this->body->getContents())->result;
     }
 
     public function updateImage(string $accountID, string $path, array $metadata = [], bool $requireSignedURLs = false): object
@@ -92,6 +92,9 @@ class Images implements API
         return $this->body->result;
     }
 
+    /**
+     * Get the root URL for the application.
+     */
     public function getBaseImage(string $accountID, string $path): string
     {
         $response = $this->adapter->get("accounts/{$accountID}/images/v1/{$path}/blob");
