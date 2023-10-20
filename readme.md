@@ -1,24 +1,30 @@
-# Cloudflare Images Filesystem Driver
-...
+# Laravel wrapper for Cloudflare
+This is a Laravel wrapper for the official Cloudflare API v4 SDK (https://github.com/cloudflare/cloudflare-php). The full documentation of the Cloudflare API can be found [here](https://developers.cloudflare.com/api/).
+
+Since the Cloudflare Images API is not yet supported by the official SDK, we included a wrapper for the Cloudflare Images API. The full documentation of the Cloudflare Images API can be found [here](https://developers.cloudflare.com/images/).
 
 ## Requirements
 
 - PHP >= 8.0
 - Laravel >= 9.0
 
-## Confuguration
-Add the following to your config/filesystems.php file:
+## Configuration
+Add the following environment variables to your .env file:
 ```
-'cloudflare-images' => [
-    'driver' => 'cloudflare-images',
-    'account_id' => env('CLOUDFLARE_IMAGES_ACCOUNT_ID'),
-    'api_token' => env('CLOUDFLARE_IMAGES_API_TOKEN'),
-],
+CLOUDFLARE_API_EMAIL=<API email>
+CLOUDFLARE_API_KEY=<API key>
 ```
-And add the following environment variables to your .env file:
+If you need to you can publish the configuration file with the following command:
 ```
-CLOUDFLARE_IMAGES_ACCOUNT_ID=<account id>
-CLOUDFLARE_IMAGES_API_TOKEN=<API token>
+php artisan vendor:publish --provider='Foodticket\Cloudflare\CloudflareServiceProvider' --tag='config'
+```
+
+## Getting started
+All the Cloudflare API endpoints are available via the Cloudflare facade.
+```
+use Foodticket\Cloudflare\Facades\Cloudflare;
+
+$zones = Cloudflare::zones()->listZones();
 ```
 
 ## Security Vulnerabilities
