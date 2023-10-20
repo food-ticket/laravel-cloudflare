@@ -23,6 +23,7 @@ use Cloudflare\API\Endpoints\WAF;
 use Cloudflare\API\Endpoints\ZoneLockdown;
 use Cloudflare\API\Endpoints\Zones;
 use Cloudflare\API\Endpoints\ZoneSettings;
+use Foodticket\Cloudflare\Endpoints\Images;
 
 class Cloudflare
 {
@@ -46,6 +47,11 @@ class Cloudflare
     public function firewall(): FirewallSettings
     {
         return new FirewallSettings($this->adapter);
+    }
+
+    public function images(): Images
+    {
+        return new Images($this->adapter);
     }
 
     public function ip(): IPs

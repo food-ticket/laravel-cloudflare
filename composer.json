@@ -1,7 +1,7 @@
 {
     "name": "foodticket/laravel-cloudflare",
     "description": "A Laravel wrapper for the Cloudflare API",
-    "keywords": ["laravel", "Cloudflare", "api"],
+    "keywords": ["laravel", "Cloudflare", "api", "Foodticket"],
     "type": "library",
     "require": {
         "php": "^8.0",
@@ -25,7 +25,9 @@
     "authors": [
         {
             "name": "Rik Morskate",
-            "email": "rik@foodticket.nl"
+            "email": "rik@foodticket.nl",
+            "homepage": "https://foodticket.nl",
+            "role": "Developer"
         }
     ],
     "minimum-stability": "stable",
