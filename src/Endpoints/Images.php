@@ -35,9 +35,26 @@ class Images implements API
         return $this->body->result->images;
     }
 
-    public function uploadImage(string $accountID, string $path, $contents): object
+    public function uploadImage(string $accountID, string $path, $contents, string $id = null, array $metadata = []): object
     {
         $config = config('cloudflare');
+
+        $body = [
+            'file' => [
+                'Content-type' => 'multipart/form-data',
+                'name' => 'file',
+                'filename' => $path,
+                'contents' => $contents,
+            ],
+        ];
+
+        if ($id) {
+            $body['id'] = $id;
+        }
+
+        if (!empty($metadata)) {
+            $body['metadata'] = \GuzzleHttp\json_encode($metadata);
+        }
 
         $response = Http::baseUrl("https://api.cloudflare.com/client/v4/accounts/{$accountID}")
             ->withHeaders([
@@ -45,8 +62,7 @@ class Images implements API
                 'X-Auth-Key' => $config['api_key'],
             ])
             ->asMultipart()
-            ->attach('file', $contents, $path)
-            ->post('images/v1');
+            ->post('images/v1', $body);
 
         $response->throw();
 
