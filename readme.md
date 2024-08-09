@@ -35,4 +35,4 @@ $zones = Cloudflare::zones()->listZones();
 
 ## Security Vulnerabilities
 
-If you discover a security vulnerability within this project, please email me via [development@foodticket.nl](mailto:development@foodticket.nl).
+If you discover a security vulnerability within this project, please email me via [developer@foodticket.nl](mailto:developer@foodticket.nl).
