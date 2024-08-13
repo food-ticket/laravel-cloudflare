@@ -35,10 +35,8 @@ class Images implements API
         return $this->body->result->images;
     }
 
-    public function uploadImage(string $accountID, string $path, $contents, string $id = null, array $metadata = []): object
+    public function uploadImage(string $accountID, string $path, $contents, string $id = null, array $metadata = [], ?string $batchToken = null): object
     {
-        $config = config('cloudflare');
-
         $body = [
             'file' => [
                 'Content-type' => 'multipart/form-data',
@@ -56,12 +54,9 @@ class Images implements API
             $body['metadata'] = \GuzzleHttp\json_encode($metadata);
         }
 
-        $response = Http::baseUrl("https://api.cloudflare.com/client/v4/accounts/{$accountID}")
-            ->withHeaders([
-                'X-Auth-Email' => $config['api_email'],
-                'X-Auth-Key' => $config['api_key'],
-            ])
-            ->asMultipart()
+        $http = $this->getRequestObject(accountID: $accountID, batchToken: $batchToken);
+
+        $response = $http->asMultipart()
             ->post('images/v1', $body);
 
         $response->throw();
@@ -118,5 +113,39 @@ class Images implements API
         $this->body = $response->getBody();
 
         return $this->body->getContents();
+    }
+
+    /**
+     * Get batch API token for making unrated, consecutive requests.
+     */
+    public function getBatchToken(string $accountID): string
+    {
+        $response = $this->adapter->get("accounts/{$accountID}/images/v1/batch_token");
+
+        $this->body = $response->getBody();
+
+        return json_decode($this->body->getContents())->result->token;
+    }
+
+    private function getRequestObject(string $accountID, ?string $batchToken): Http
+    {
+        $config = config('cloudflare');
+
+        $baseUrl = $batchToken
+            ? "https://batch.imagedelivery.net"
+            : "https://api.cloudflare.com/client/v4/accounts/{$accountID}";
+
+        $http = Http::baseUrl($baseUrl);
+
+        if ($batchToken) {
+            return $http->withToken(
+                $batchToken
+            );
+        }
+
+        return $http->withHeaders([
+            'X-Auth-Email' => $config['api_email'],
+            'X-Auth-Key' => $config['api_key'],
+        ]);
     }
 }
