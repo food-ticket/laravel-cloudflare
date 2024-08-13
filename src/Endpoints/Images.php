@@ -5,6 +5,7 @@ namespace Foodticket\Cloudflare\Endpoints;
 use Cloudflare\API\Adapter\Adapter;
 use Cloudflare\API\Endpoints\API;
 use Cloudflare\API\Traits\BodyAccessorTrait;
+use Illuminate\Http\Client\PendingRequest;
 use Illuminate\Support\Facades\Http;
 
 class Images implements API
@@ -127,7 +128,7 @@ class Images implements API
         return json_decode($this->body->getContents())->result->token;
     }
 
-    private function getRequestObject(string $accountID, ?string $batchToken): Http
+    private function getRequestObject(string $accountID, ?string $batchToken): PendingRequest
     {
         $config = config('cloudflare');
 
