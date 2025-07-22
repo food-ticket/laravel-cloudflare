@@ -3,6 +3,7 @@
     "description": "A Laravel wrapper for the Cloudflare API",
     "keywords": ["laravel", "Cloudflare", "api", "Foodticket"],
     "type": "library",
+    "license": "MIT",
     "require": {
         "php": "^8.0|^8.1|^8.2|^8.3",
         "cloudflare/sdk": "^1.0.0",
@@ -22,7 +23,6 @@
             "Tests\\": "tests"
         }
     },
-    "license": "GPL-3.0-only",
     "authors": [
         {
             "name": "Rik",
